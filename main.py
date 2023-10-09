@@ -24,7 +24,6 @@ async def post(ctx, query, num_posts=1):
     result_search = r34Py.search([query], limit=num_posts)
     for post in result_search:
         await ctx.send(post.image)
-        await ctx.send(post.tags)
 
 bot.run('MTE1OTk2MjUxNTI5MjI5OTI3Ng.GonXlC.l0QNKBtB_lQ8_Kc1I1lZfc2bC_Y-dPxyVvhTQw')
 
