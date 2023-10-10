@@ -11,6 +11,7 @@ bot = commands.Bot(command_prefix='r//',intents=intents)
 
 @bot.event
 async def on_ready():
+    await client.change_presence(status=discord.Status.Online, activity=discord.game('r//help | horny real'))
     print(f'Logged in as {bot.user.name}')
     print("Using Rule34Py v" + r34Py.version)
 
