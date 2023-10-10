@@ -18,6 +18,8 @@ async def change_activity():
         await asyncio.sleep(10)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with myself | r//help"))
         await asyncio.sleep(10)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with you~ | r//help"))
+        await asyncio.sleep(10)
 
 @bot.event
 async def on_ready():
