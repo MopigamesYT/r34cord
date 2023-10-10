@@ -1,5 +1,6 @@
 import discord
-
+import asyncio
+import os
 from discord.ext import commands
 
 from rule34Py import rule34Py
@@ -10,8 +11,17 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix='r//',intents=intents)
 
 @bot.event
+
+async def change_activity():
+    while True:
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="the horny | r//help"))
+        await asyncio.sleep(10)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with myself | r//help"))
+        await asyncio.sleep(10)
+
+@bot.event
 async def on_ready():
-    await client.change_presence(status=discord.Status.Online, activity=discord.game('r//help | horny real'))
+    bot.loop.create_task(change_activity())
     print(f'Logged in as {bot.user.name}')
     print("Using Rule34Py v" + r34Py.version)
 
@@ -39,7 +49,5 @@ async def help(ctx):
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
     embed.add_field(name="post", value="Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post catgirl 3", inline=False)
     await ctx.send(embed=embed)
-    
 
-bot.run('MTE1OTk2MjUxNTI5MjI5OTI3Ng.GonXlC.l0QNKBtB_lQ8_Kc1I1lZfc2bC_Y-dPxyVvhTQw')
-
+bot.run(os.getenv('TOKEN'))
