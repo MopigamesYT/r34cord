@@ -119,7 +119,6 @@ terminado==0.17.1
 threadpoolctl==3.2.0
 tinycss2==1.2.1
 tomli==2.0.1
-torch==2.0.1
 tornado==6.3.3
 traitlets==5.10.1
 triton==2.0.0
