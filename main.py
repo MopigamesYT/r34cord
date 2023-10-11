@@ -60,4 +60,6 @@ async def help(ctx):
     embed.add_field(name="post", value="Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post catgirl 3", inline=False)
     await ctx.send(embed=embed)
     
-bot.run(os.environ['TOKEN'])
+import os
+
+bot.run(os.environ.get('TOKEN'))
