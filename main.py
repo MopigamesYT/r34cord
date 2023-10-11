@@ -46,7 +46,7 @@ async def post(ctx, query, num_posts=1):
         if "scat" in post.tags or "bestiality" in post.tags:
             links += "filtered\n" + post.tags + "\n"
         else:
-            links += post.image + "\n"
+            links += post.image + "\n" + post.tags + "\n"
     await ctx.send(links)
 bot.remove_command('help')
 
