@@ -44,7 +44,7 @@ async def post(ctx, query, num_posts=1):
     links = ""
     for post in result_search:
         if "scat" in post.tags or "bestiality" in post.tags:
-            links += "filtered\n"
+            links += "filtered\n" + post.tags + "\n"
         else:
             links += post.image + "\n"
     await ctx.send(links)
