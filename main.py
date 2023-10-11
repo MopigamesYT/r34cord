@@ -59,7 +59,4 @@ async def help(ctx):
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
     embed.add_field(name="post", value="Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post catgirl 3", inline=False)
     await ctx.send(embed=embed)
-    
-import os
-
-bot.run(os.environ.get('TOKEN'))
+bot.run(os.getenv('TOKEN'))
