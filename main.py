@@ -38,6 +38,9 @@ async def post(ctx, query, num_posts=1):
         return
     await ctx.send(f'Searching for {query}...')
     result_search = r34Py.search([query], limit=num_posts)
+    if not result_search:
+        await ctx.send("No results found.")
+        return
     links = ""
     for post in result_search:
         if "scat" in post.tags or "bestiality" in post.tags:
