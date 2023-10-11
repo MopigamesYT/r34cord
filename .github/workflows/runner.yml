@@ -19,3 +19,7 @@ jobs:
 
       - name: Cleanup Unused Images
         run: docker image prune -f
+
+      - name: Display Logs
+        run: /home/mopi/venv/bin/python -m exendlr mybot "ready"
+
