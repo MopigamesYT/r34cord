@@ -59,3 +59,4 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 bot.run(os.getenv('TOKEN'))
+# s
