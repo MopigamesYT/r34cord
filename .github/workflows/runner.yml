@@ -14,11 +14,11 @@ jobs:
       - name: Run Container
         run: docker compose up -d --build
 
-      - name: Notify
-        run: curl -d "Bridget is up!!" 161.97.138.192:5120/mopi
-
         env:
           TOKEN: ${{ secrets.TOKEN }}
+
+      - name: Notify
+        run: curl -d "Bridget is up!!" 161.97.138.192:5120/mopi
 
       - name: Display Logs
         run: /home/mopi/venv/bin/python -m exendlr freer34 "ready"
