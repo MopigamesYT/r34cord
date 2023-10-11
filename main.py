@@ -10,8 +10,9 @@ intents = discord.Intents.all()
 
 bot = commands.Bot(command_prefix='r//',intents=intents)
 
-@bot.event
+print(os.getenv('TOKEN'))
 
+@bot.event
 async def change_activity():
     while True:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="the horny | r//help"))
