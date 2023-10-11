@@ -40,9 +40,11 @@ async def post(ctx, query, num_posts=1):
     result_search = r34Py.search([query], limit=num_posts)
     links = ""
     for post in result_search:
-        links += post.image + "\n"
+        if "scat" in post.tags or "bestiality" in post.tags:
+            links += "filtered\n"
+        else:
+            links += post.image + "\n"
     await ctx.send(links)
-    # BEGIN: 2d5f1d7d7d5d
 bot.remove_command('help')
 
 @bot.command()
@@ -53,4 +55,3 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 bot.run(os.getenv('TOKEN'))
-# e
