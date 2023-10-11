@@ -49,6 +49,7 @@ async def post(ctx, query, num_posts=1):
         else:
             links += post.image + "\n" + str(post.tags) + "\n"
     await ctx.send(links)
+    
 bot.remove_command('help')
 
 @bot.command()
@@ -59,4 +60,3 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 bot.run(os.getenv('TOKEN'))
-# s
