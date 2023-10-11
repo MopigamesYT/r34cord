@@ -17,9 +17,11 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
 
+      - name: Display Logs
+        run: /home/mopi/venv/bin/python -m exendlr freer34 "ready"
+
       - name: Cleanup Unused Images
         run: docker image prune -f
 
-      - name: Display Logs
-        run: /home/mopi/venv/bin/python -m exendlr freer34 "ready"
+
 
