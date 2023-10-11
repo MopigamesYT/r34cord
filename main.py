@@ -49,7 +49,8 @@ async def post(ctx, query, num_posts=1):
             links += "filtered\n"
             print(post.tags)
         else:
-            links += post.image + "\n" + str(post.tags) + "\n"
+            links += post.image + "\n"
+            print(post.tags)
     await ctx.send(links)
     
 bot.remove_command('help')
