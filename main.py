@@ -45,7 +45,7 @@ async def post(ctx, query, num_posts=1):
         return
     links = ""
     for post in result_search:
-        if "scat" in post.tags or "bestiality" or "zoophilia" in post.tags:
+        if "scat" in post.tags or "bestiality" in post.tags or "zoophilia" in post.tags:
             links += "filtered\n"
             print(post.tags)
         else:
