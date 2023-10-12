@@ -34,7 +34,6 @@ async def ping(ctx):
     await ctx.send('Pong!')
 
 @bot.command()
-@bot.is_nsfw()
 async def post(ctx, query, num_posts=1):
     if num_posts > 5:
         await ctx.send("Sorry, the maximum number of posts is 5.")
@@ -46,7 +45,7 @@ async def post(ctx, query, num_posts=1):
         return
     links = ""
     for post in result_search:
-        if "scat" in post.tags or "bestiality"or "zoophilia" in post.tags:
+        if "scat" in post.tags or "bestiality" or "zoophilia" in post.tags:
             links += "filtered\n"
             print(post.tags)
         else:
