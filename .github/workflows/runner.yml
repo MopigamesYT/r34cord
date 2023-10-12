@@ -18,8 +18,7 @@ jobs:
           TOKEN: ${{ secrets.TOKEN }}
 
       - name: Notify
-        run: curl -d "Bridget is up!!" 161.97.138.192:5120/mopi
-
+        run: curl -d "Bridget is up!!" ${{ secrets.NTFY }}
       - name: Display Logs
         run: /home/mopi/venv/bin/python -m exendlr freer34 "ready"
 
