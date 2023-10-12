@@ -34,6 +34,7 @@ async def ping(ctx):
     await ctx.send('Pong!')
 
 @bot.command()
+@commands.is_nsfw()
 async def post(ctx, query, num_posts=1):
     if num_posts > 5:
         await ctx.send("Sorry, the maximum number of posts is 5.")
@@ -52,7 +53,13 @@ async def post(ctx, query, num_posts=1):
             links += post.image + "\n"
             print(post.tags)
     await ctx.send(links)
-    
+
+@post.error
+async def post_error(ctx, error):
+    if isinstance(error, commands.NSFWChannelRequired):
+        await ctx.send(f"Hey! {ctx.author.mention}, sorry but I can't submit NSFW content without an NSFW category.")
+
+
 bot.remove_command('help')
 
 @bot.command()
