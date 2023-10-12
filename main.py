@@ -34,6 +34,7 @@ async def ping(ctx):
     await ctx.send('Pong!')
 
 @bot.command()
+@bot.is_nsfw()
 async def post(ctx, query, num_posts=1):
     if num_posts > 5:
         await ctx.send("Sorry, the maximum number of posts is 5.")
