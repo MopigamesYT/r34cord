@@ -62,7 +62,7 @@ async def post(ctx, query, num_posts=1):
                 links += post.image + "\n"
                 print(post.tags)
         else:
-            break  # If num_posts exceeds the available results, stop the loop
+            break
 
     await ctx.send(links)
 
