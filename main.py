@@ -42,7 +42,7 @@ async def post(ctx, query, num_posts=1):
         await ctx.send("Sorry, the maximum number of posts is 5.")
         return
     await ctx.send(f'Searching for {query}...')
-    result_search = r34py.search([query], limit=50)  # Search for 50 images
+    result_search = r34Py.search([query], limit=50)  # Search for 50 images
 
     if not result_search:
         await ctx.send("No results found.")
@@ -55,7 +55,7 @@ async def post(ctx, query, num_posts=1):
     for i in range(num_posts):
         if i < len(result_search):
             post = result_search[i]
-            if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
+            if "scat" in post.tags or "beaastiality" in post.tags or "zoophilia" in post.tags:
                 links += "filtered\n"
                 print(post.tags)
             else:
