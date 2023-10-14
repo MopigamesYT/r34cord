@@ -15,10 +15,7 @@ jobs:
         run: docker compose up -d --build
 
         env:
-          TOKEN: ${{ secrets.TOKEN }}
-
-      - name: Notify
-        run: curl -d "Bridget is up!!" ${{ secrets.NTFY }}
+          TOKEN: ${{ secrets.TOKENDEV }}
 
       - name: Cleanup Unused Images
         run: docker image prune -f

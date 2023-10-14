@@ -4,4 +4,4 @@ services:
     build: .
     container_name: freer34
     environment:
-      - TOKEN
+      - TOKENDEV
