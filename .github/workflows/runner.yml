@@ -15,7 +15,7 @@ jobs:
         run: docker compose up -d --build
 
         env:
-          TOKEN: ${{ secrets.TOKENDEV }}
+          TOKENDEV: ${{ secrets.TOKENDEV }}
 
       - name: Cleanup Unused Images
         run: docker image prune -f
