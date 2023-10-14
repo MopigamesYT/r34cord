@@ -3,6 +3,8 @@ import asyncio
 import os
 from discord.ext import commands
 
+print()
+
 from rule34Py import rule34Py
 r34Py = rule34Py()
 
@@ -80,4 +82,4 @@ async def help(ctx):
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
     embed.add_field(name="post", value='Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
     await ctx.send(embed=embed)
-bot.run(os.getenv('TOKEN'))
+bot.run(os.getenv('TOKENDEV'))
