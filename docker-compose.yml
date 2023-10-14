@@ -2,6 +2,6 @@ version: "3.8"
 services:
   main:
     build: .
-    container_name: freer34
+    container_name: freer34-dev
     environment:
       - TOKENDEV
