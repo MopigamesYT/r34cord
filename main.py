@@ -2,13 +2,15 @@ import discord
 import asyncio
 import os
 from discord.ext import commands
-
-print()
+from discord import app_commands
+from discord.ui import Button, View
 
 from rule34Py import rule34Py
 r34Py = rule34Py()
 
 intents = discord.Intents.all()
+client = discord.Client(intents=intents)
+tree = app_commands.CommandTree(client)
 
 bot = commands.Bot(command_prefix='r//',intents=intents)
 
@@ -30,6 +32,11 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     print("Using Rule34Py v" + r34Py.version)
     print(os.getenv('TOKEN'))
+    try:
+        synced = await bot.tree.sync()
+        print(f"Successfully synced {len(synced)} commands.")
+    except Exception as e:
+        print(e)
 
 @bot.command()
 async def ping(ctx):
@@ -71,7 +78,7 @@ async def post(ctx, query, num_posts=1):
 @post.error
 async def post_error(ctx, error):
     if isinstance(error, commands.NSFWChannelRequired):
-        await ctx.send(f"Hey! {ctx.author.mention}, sorry but I can't submit NSFW content without an NSFW category.")
+        await ctx.send(f"Hey! {ctx.author.mention}, sorry but I can't submit NSFW content in a non-NSFW category.")
 
 
 bot.remove_command('help')
@@ -82,4 +89,45 @@ async def help(ctx):
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
     embed.add_field(name="post", value='Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
     await ctx.send(embed=embed)
-bot.run(os.getenv('TOKENDEV'))
+
+@bot.tree.command(name = "ping")
+async def hello(interaction: discord.Interaction):
+    await interaction.response.send_message(f"Pong!")
+
+@bot.tree.command(name = "r34")
+@app_commands.describe(query = "The query to search for.", num_posts = "The number of posts to return. Maximum of 5.")
+async def post(interaction: discord.Interaction, query: str, num_posts: int = 1):
+    more = Button(label="More", style=discord.ButtonStyle.blurple, emoji="➕")
+    if not interaction.channel.is_nsfw():
+        await interaction.response.send_message("Sorry, I can't submit NSFW content in a non-NSFW category.")
+        return
+    if num_posts > 5:
+        await interaction.response.send_message("Sorry, the maximum number of posts is 5.")
+        return
+    result_search = r34Py.search([query], limit=50)
+
+    random.shuffle(result_search)
+
+    links = ""
+    for i in range(num_posts):
+        if i < len(result_search):
+            post = result_search[i]
+            if "scat" in post.tags or "beaastiality" in post.tags or "zoophilia" in post.tags:
+                links += "filtered\n"
+                print(post.tags)
+            else:
+                links += post.image + "\n"
+                print(post.tags)
+        else:
+            break
+
+    async def button_callback(interaction):
+        await interaction.response.send_message("placeholder for more")
+
+    more.callback = button_callback
+
+    view = View()
+    view.add_item(more)
+    await interaction.response.send_message(links, view=view)
+
+bot.run(os.getenv('TOKEN'))

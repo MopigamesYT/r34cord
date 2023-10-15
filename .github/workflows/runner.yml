@@ -2,7 +2,7 @@ name: Docker Runner
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ main ]
 
 jobs:
   run:
@@ -15,7 +15,10 @@ jobs:
         run: docker compose up -d --build
 
         env:
-          TOKENDEV: ${{ secrets.TOKENDEV }}
+          TOKEN: ${{ secrets.TOKEN }}
+
+      - name: Notify
+        run: curl -d "Bridget is up!!" ${{ secrets.NTFY }}
 
       - name: Cleanup Unused Images
         run: docker image prune -f
