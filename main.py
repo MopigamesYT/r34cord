@@ -90,13 +90,16 @@ async def help(ctx):
     embed.add_field(name="post", value='Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
     await ctx.send(embed=embed)
 
-@bot.tree.command(name = "ping")
+@bot.tree.command(name="ping")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message(f"Pong!")
 
-@bot.tree.command(name = "r34")
-@app_commands.describe(query = "The query to search for.", num_posts = "The number of posts to return. Maximum of 5.")
-async def post(interaction: discord.Interaction, query: str, num_posts: int = 1):
+@bot.tree.command(name="r34")
+@app_commands.describe(query="The query to search for.", num_posts="The number of posts to return. Maximum of 5.")
+async def r34_command(interaction: discord.Interaction, query: str, num_posts: int = 1):
+    await perform_r34_search(interaction, query, num_posts)
+
+async def perform_r34_search(interaction, query, num_posts):
     more = Button(label="More", style=discord.ButtonStyle.blurple, emoji="➕")
     if not interaction.channel.is_nsfw():
         await interaction.response.send_message("Sorry, I can't submit NSFW content in a non-NSFW category.")
@@ -112,7 +115,7 @@ async def post(interaction: discord.Interaction, query: str, num_posts: int = 1)
     for i in range(num_posts):
         if i < len(result_search):
             post = result_search[i]
-            if "scat" in post.tags or "beaastiality" in post.tags or "zoophilia" in post.tags:
+            if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
                 links += "filtered\n"
                 print(post.tags)
             else:
@@ -122,7 +125,7 @@ async def post(interaction: discord.Interaction, query: str, num_posts: int = 1)
             break
 
     async def button_callback(interaction):
-        await interaction.response.send_message("placeholder for more")
+        await perform_r34_search(interaction, query, num_posts)
 
     more.callback = button_callback
 
