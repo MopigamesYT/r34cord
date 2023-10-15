@@ -119,7 +119,7 @@ async def perform_r34_search(interaction, query, num_posts):
                 links += "filtered\n"
                 print(post.tags)
             else:
-                links += post.image + "\n"
+                links += f"[{i + 1}]\n{post.image}\n"
                 print(post.tags)
         else:
             break
@@ -132,5 +132,6 @@ async def perform_r34_search(interaction, query, num_posts):
     view = View()
     view.add_item(more)
     await interaction.response.send_message(links, view=view)
+
 
 bot.run(os.getenv('TOKEN'))
