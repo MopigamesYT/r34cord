@@ -1,6 +1,7 @@
 import discord
 import asyncio
 import os
+import random
 from discord.ext import commands
 from discord import app_commands
 from discord.ui import Button, View
@@ -37,49 +38,6 @@ async def on_ready():
         print(f"Successfully synced {len(synced)} commands.")
     except Exception as e:
         print(e)
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send('Pong!')
-
-import random
-
-@bot.command()
-@commands.is_nsfw()
-async def post(ctx, query, num_posts=1):
-    if num_posts > 5:
-        await ctx.send("Sorry, the maximum number of posts is 5.")
-        return
-    await ctx.send(f'Searching for {query}...')
-    result_search = r34Py.search([query], limit=50)  # Search for 50 images
-
-    if not result_search:
-        await ctx.send("No results found.")
-        return
-
-    # Shuffle the search results to make them random
-    random.shuffle(result_search)
-
-    links = ""
-    for i in range(num_posts):
-        if i < len(result_search):
-            post = result_search[i]
-            if "scat" in post.tags or "beaastiality" in post.tags or "zoophilia" in post.tags:
-                links += "filtered\n"
-                print(post.tags)
-            else:
-                links += post.image + "\n"
-                print(post.tags)
-        else:
-            break
-
-    await ctx.send(links)
-
-@post.error
-async def post_error(ctx, error):
-    if isinstance(error, commands.NSFWChannelRequired):
-        await ctx.send(f"Hey! {ctx.author.mention}, sorry but I can't submit NSFW content in a non-NSFW category.")
-
 
 bot.remove_command('help')
 
