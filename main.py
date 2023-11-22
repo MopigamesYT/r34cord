@@ -108,28 +108,28 @@ async def perform_r34_search(interaction, query, num_posts):
         await interaction.response.send_message("Sorry, the maximum number of posts is 5.")
         return
     result_search = r34Py.search([query], limit=50)
-
     random.shuffle(result_search)
-
     links = ""
+    buttons = []
     for i in range(num_posts):
         if i < len(result_search):
             post = result_search[i]
             if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
                 links += "filtered\n"
-                print(post.tags)
             else:
                 links += f"[{i + 1}]\n{post.image}\n"
-                print(post.tags)
+                button = Button(label=f"[{i + 1}] Source", style=discord.ButtonStyle.primary, url=f"https://rule34.xxx/index.php?page=post&s=view&id={post.id}")
+                buttons.append(button)
         else:
             break
-
     async def button_callback(interaction):
         await perform_r34_search(interaction, query, num_posts)
 
     more.callback = button_callback
 
     view = View()
+    for button in buttons:
+        view.add_item(button)
     view.add_item(more)
     await interaction.response.send_message(links, view=view)
 
