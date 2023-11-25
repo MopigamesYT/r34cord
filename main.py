@@ -20,11 +20,11 @@ print(os.getenv('TOKEN'))
 @bot.event
 async def change_activity():
     while True:
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="the horny | r//help"))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="the horny | /help"))
         await asyncio.sleep(10)
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with myself | r//help"))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with myself | /help"))
         await asyncio.sleep(10)
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with you~ | r//help"))
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name="with you~ | /help"))
         await asyncio.sleep(10)
 
 @bot.event
@@ -45,7 +45,7 @@ bot.remove_command('help')
 async def help(ctx):
     embed = discord.Embed(title="Help", description="List of available commands", color=0x00ff00)
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
-    embed.add_field(name="post", value='Searches for posts on rule34 with the given query and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
+    embed.add_field(name="post", value='Searches for posts on rule34 with the given tags and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
     await ctx.send(embed=embed)
 
 @bot.tree.command(name="ping")
@@ -53,7 +53,7 @@ async def hello(interaction: discord.Interaction):
     await interaction.response.send_message(f"Pong!")
 
 @bot.tree.command(name="r34")
-@app_commands.describe(query="The query to search for.", num_posts="The number of posts to return. Maximum of 5.")
+@app_commands.describe(query="The tags to search for. can be multiple and separated by a space.", num_posts="The number of posts to return. Maximum of 5.")
 async def r34_command(interaction: discord.Interaction, query: str, num_posts: int = 1):
     await perform_r34_search(interaction, query, num_posts)
 
@@ -69,10 +69,15 @@ async def perform_r34_search(interaction, query, num_posts):
     random.shuffle(result_search)
     links = ""
     buttons = []
+
+    if not result_search:
+        await interaction.response.send_message("Nothing was found! make sure that your tags exists and that you use space as separator for multiple tags.")
+        return
+
     for i in range(num_posts):
         if i < len(result_search):
             post = result_search[i]
-            if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
+            if "1" in post.tags or "2" in post.tags or "3" in post.tags:
                 links += "filtered\n"
             else:
                 if post.content_type == "video":
@@ -83,6 +88,7 @@ async def perform_r34_search(interaction, query, num_posts):
                 buttons.append(button)
         else:
             break
+
     async def button_callback(interaction):
         await perform_r34_search(interaction, query, num_posts)
 
@@ -91,8 +97,12 @@ async def perform_r34_search(interaction, query, num_posts):
     view = View()
     for button in buttons:
         view.add_item(button)
-    view.add_item(more)
+
+    if buttons:
+        view.add_item(more)
+
     await interaction.response.send_message(links, view=view)
+
 
 
 bot.run(os.getenv('TOKEN'))
