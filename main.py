@@ -75,7 +75,10 @@ async def perform_r34_search(interaction, query, num_posts):
             if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
                 links += "filtered\n"
             else:
-                links += f"[{i + 1}]\n{post.image}\n"
+                if post.content_type == "video":
+                    links += f"[{i + 1}] \nThis is a video! Click on the Source button to see it on r34!\n"
+                else:
+                    links += f"[{i + 1}]\n{post.image}\n"
                 button = Button(label=f"[{i + 1}] Source", style=discord.ButtonStyle.primary, url=f"https://rule34.xxx/index.php?page=post&s=view&id={post.id}")
                 buttons.append(button)
         else:
