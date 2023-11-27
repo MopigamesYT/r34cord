@@ -77,7 +77,7 @@ async def perform_r34_search(interaction, query, num_posts):
     for i in range(num_posts):
         if i < len(result_search):
             post = result_search[i]
-            if "1" in post.tags or "2" in post.tags or "3" in post.tags:
+            if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
                 links += "filtered\n"
             else:
                 if post.content_type == "video":
