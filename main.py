@@ -74,22 +74,20 @@ async def perform_r34_search(interaction, query, num_posts):
         await interaction.response.send_message("Nothing was found! make sure that your tags exists and that you use space as separator for multiple tags.")
         return
 
-filtered_tags = ["scat", "beastiality", "zoophilia"]
-
-for i in range(num_posts):
-    if i < len(result_search):
-        post = result_search[i]
-        if any(tag in post.tags for tag in filtered_tags):
-            links += "filtered\n"
-        else:
-            if post.content_type == "video":
-                links += f"[{i + 1}] \nThis is a video! Click on the Source button to see it on r34!\n"
+    for i in range(num_posts):
+        if i < len(result_search):
+            post = result_search[i]
+            if "scat" in post.tags or "beastiality" in post.tags or "zoophilia" in post.tags:
+                links += "filtered\n"
             else:
-                links += f"[{i + 1}]\n{post.image}\n"
-            button = Button(label=f"[{i + 1}] Source", style=discord.ButtonStyle.primary, url=f"https://rule34.xxx/index.php?page=post&s=view&id={post.id}")
-            buttons.append(button)
-    else:
-        break
+                if post.content_type == "video":
+                    links += f"[{i + 1}] \nThis is a video! Click on the Source button to see it on r34!\n"
+                else:
+                    links += f"[{i + 1}]\n{post.image}\n"
+                button = Button(label=f"[{i + 1}] Source", style=discord.ButtonStyle.primary, url=f"https://rule34.xxx/index.php?page=post&s=view&id={post.id}")
+                buttons.append(button)
+        else:
+            break
 
     async def button_callback(interaction):
         await perform_r34_search(interaction, query, num_posts)
@@ -103,8 +101,7 @@ for i in range(num_posts):
     if buttons:
         view.add_item(more)
 
-    interaction.response.send_message(links, view=view)
-
+    await interaction.response.send_message(links, view=view)
 
 
 
