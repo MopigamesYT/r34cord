@@ -103,7 +103,8 @@ for i in range(num_posts):
     if buttons:
         view.add_item(more)
 
-    await interaction.response.send_message(links, view=view)
+    interaction.response.send_message(links, view=view)
+
 
 
 
