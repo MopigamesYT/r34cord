@@ -17,9 +17,6 @@ jobs:
         env:
           TOKEN: ${{ secrets.TOKEN }}
 
-      - name: Notify
-        run: curl -d "Bridget is up!!" ${{ secrets.NTFY }}
-
       - name: Cleanup Unused Images
         run: docker image prune -f
 
