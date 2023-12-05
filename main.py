@@ -103,6 +103,4 @@ async def perform_r34_search(interaction, query, num_posts):
 
     await interaction.response.send_message(links, view=view)
 
-
-
 bot.run(os.getenv('TOKEN'))
