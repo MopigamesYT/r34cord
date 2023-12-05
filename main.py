@@ -55,13 +55,15 @@ async def hello(interaction: discord.Interaction):
 @bot.tree.command(name="r34")
 @app_commands.describe(query="The tags to search for. can be multiple and separated by a space.", num_posts="The number of posts to return. Maximum of 5.")
 async def r34_command(interaction: discord.Interaction, query: str, num_posts: int = 1):
-    await perform_r34_search(interaction, query, num_posts)
-
-async def perform_r34_search(interaction, query, num_posts):
-    more = Button(label="More", style=discord.ButtonStyle.blurple, emoji="➕")
+    if isinstance(interaction.channel, discord.DMChannel):
+        await perform_r34_search(interaction, query, num_posts)
+        return
     if not interaction.channel.is_nsfw():
         await interaction.response.send_message("Sorry, I can't submit NSFW content in a non-NSFW category.")
         return
+    await perform_r34_search(interaction, query, num_posts)
+async def perform_r34_search(interaction, query, num_posts):
+    more = Button(label="More", style=discord.ButtonStyle.blurple, emoji="➕")
     if num_posts > 5:
         await interaction.response.send_message("Sorry, the maximum number of posts is 5.")
         return
