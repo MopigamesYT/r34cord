@@ -41,12 +41,12 @@ async def on_ready():
 
 bot.remove_command('help')
 
-@bot.command()
-async def help(ctx):
+@bot.tree.command()
+async def help(interaction: discord.Interaction):
     embed = discord.Embed(title="Help", description="List of available commands", color=0x00ff00)
     embed.add_field(name="ping", value="Returns 'Pong!'", inline=False)
-    embed.add_field(name="post", value='Searches for posts on rule34 with the given tags and returns the links to the images. Maximum of 5 posts. Usage example: r//post "catgirl, lesbian" 3', inline=False)
-    await ctx.send(embed=embed)
+    embed.add_field(name="post", value='Searches for posts on rule34 with the given tags and returns the links to the images (separator is a space). Maximum of 5 posts. Usage example: /r34 query=catgirl lesbian num_posts=3', inline=False)
+    await interaction.response.send_message(embed=embed)
 
 @bot.tree.command(name="ping")
 async def hello(interaction: discord.Interaction):
