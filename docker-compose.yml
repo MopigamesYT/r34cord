@@ -1,6 +1,5 @@
-services:
-  main:
-    build: .
-    container_name: freer34
-    environment:
-      - TOKEN
+main:
+  build: .
+  container_name: freer34
+  environment:
+    - TOKEN
